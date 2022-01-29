@@ -5,7 +5,10 @@
 
 import torch
 import torch.nn as nn
-from temporal import TemporalAffine, TemporalSoftmaxLoss
+try:
+    from .temporal import TemporalAffine, TemporalSoftmaxLoss
+except:
+    from temporal import TemporalAffine, TemporalSoftmaxLoss
 
 
 class CaptioningRNN(nn.Module):
@@ -112,8 +115,7 @@ def main():
                           input_dim=input_dim,
                           wordvec_dim=wordvec_dim,
                           hidden_dim=hidden_dim,
-                          cell_type='rnn')
-    model.to(device)
+                          cell_type='rnn').to(device)
 
     # captions: List[Int]
     captions = torch.randint(vocab_size, size=(
